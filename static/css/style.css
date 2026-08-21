@@ -1,0 +1,409 @@
+/* ==========================================================================
+   YEKAN BAKH FANUM (PERSIAN NUMERALS) - WEBFONT DEFINITIONS
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-style: normal;
+  font-weight: 100;
+  src: url('../fonts/woff2/YekanBakhFaNum-Thin.woff2') format('woff2'),
+       url('../fonts/woff/YekanBakhFaNum-Thin.woff') format('woff'),
+       url('/static/fonts/woff2/YekanBakhFaNum-Thin.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../fonts/woff2/YekanBakhFaNum-Light.woff2') format('woff2'),
+       url('../fonts/woff/YekanBakhFaNum-Light.woff') format('woff'),
+       url('/static/fonts/woff2/YekanBakhFaNum-Light.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-style: normal;
+  font-weight: 400;
+  font-weight: normal;
+  src: url('../fonts/woff2/YekanBakhFaNum-Regular.woff2') format('woff2'),
+       url('../fonts/woff/YekanBakhFaNum-Regular.woff') format('woff'),
+       url('/static/fonts/woff2/YekanBakhFaNum-Regular.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/woff2/YekanBakhFaNum-SemiBold.woff2') format('woff2'),
+       url('../fonts/woff/YekanBakhFaNum-SemiBold.woff') format('woff'),
+       url('/static/fonts/woff2/YekanBakhFaNum-SemiBold.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-style: normal;
+  font-weight: 700;
+  font-weight: bold;
+  src: url('../fonts/woff2/YekanBakhFaNum-Bold.woff2') format('woff2'),
+       url('../fonts/woff/YekanBakhFaNum-Bold.woff') format('woff'),
+       url('/static/fonts/woff2/YekanBakhFaNum-Bold.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-style: normal;
+  font-weight: 800;
+  src: url('../fonts/woff2/YekanBakhFaNum-ExtraBold.woff2') format('woff2'),
+       url('../fonts/woff/YekanBakhFaNum-ExtraBold.woff') format('woff'),
+       url('/static/fonts/woff2/YekanBakhFaNum-ExtraBold.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-style: normal;
+  font-weight: 900;
+  src: url('../fonts/woff2/YekanBakhFaNum-Black.woff2') format('woff2'),
+       url('../fonts/woff/YekanBakhFaNum-Black.woff') format('woff'),
+       url('/static/fonts/woff2/YekanBakhFaNum-Black.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-style: normal;
+  font-weight: 950;
+  src: url('../fonts/woff2/YekanBakhFaNum-ExtraBlack.woff2') format('woff2'),
+       url('../fonts/woff/YekanBakhFaNum-ExtraBlack.woff') format('woff'),
+       url('/static/fonts/woff2/YekanBakhFaNum-ExtraBlack.woff2') format('woff2');
+  font-display: swap;
+}
+
+/* ==========================================================================
+   GLOBAL RESET & FONT SETTINGS
+   ========================================================================== */
+
+body, input, button, select, textarea, p, h1, h2, h3, h4, h5, h6, table, td, th, label, kbd, nav, a, span, div {
+  font-family: 'Yekan Bakh FaNum', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Protect FontAwesome icons */
+.fa, .fas, .far, .fal, .fad, .fab, .fa-solid, .fa-regular, .fa-brands, [class^="fa-"], [class*=" fa-"] {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+}
+
+.fa-solid { font-weight: 900 !important; }
+.fa-regular { font-weight: 400 !important; }
+.fa-brands { font-family: "Font Awesome 6 Brands" !important; font-weight: 400 !important; }
+
+/* ==========================================================================
+   DARK THEME (DEFAULT)
+   ========================================================================== */
+
+:root {
+  --bg-main: #070B14;
+  --bg-card: rgba(15, 23, 42, 0.75);
+  --primary-gold: #FFC400;
+  --primary-gold-glow: rgba(255, 196, 0, 0.22);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-highlight: rgba(255, 196, 0, 0.4);
+}
+
+body {
+  background-color: var(--bg-main);
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255, 196, 0, 0.06), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(14, 165, 233, 0.04), transparent 60%),
+    radial-gradient(ellipse 50% 30% at 0% 80%, rgba(99, 102, 241, 0.03), transparent 60%);
+  background-attachment: fixed;
+  color: #F8FAFC;
+  direction: rtl;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ==========================================================================
+   LIGHT THEME OVERRIDES (COMPREHENSIVE & BULLETPROOF)
+   ========================================================================== */
+
+body.theme-light {
+  background-color: #F8FAFC !important;
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255, 196, 0, 0.12), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(14, 165, 233, 0.05), transparent 60%) !important;
+  color: #0F172A !important;
+}
+
+/* Surfaces in Light Mode */
+body.theme-light header,
+body.theme-light header > div {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-color: #E2E8F0 !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+body.theme-light header + div,
+body.theme-light header + div > div {
+  background-color: #F1F5F9 !important;
+  border-color: #E2E8F0 !important;
+}
+
+body.theme-light .glass-card {
+  background: #FFFFFF !important;
+  border-color: #E2E8F0 !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06) !important;
+  color: #0F172A !important;
+}
+
+body.theme-light .glass-card:hover {
+  border-color: #F59E0B !important;
+  box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.1), 0 0 15px rgba(255, 196, 0, 0.2) !important;
+}
+
+body.theme-light [class*="bg-slate-950"],
+body.theme-light [class*="bg-slate-900"] {
+  background-color: #F8FAFC !important;
+  border-color: #E2E8F0 !important;
+  color: #0F172A !important;
+}
+
+body.theme-light [class*="bg-slate-800"] {
+  background-color: #F1F5F9 !important;
+  border-color: #E2E8F0 !important;
+  color: #1E293B !important;
+}
+
+body.theme-light [class*="border-slate-800"],
+body.theme-light [class*="border-slate-700"] {
+  border-color: #E2E8F0 !important;
+}
+
+/* Typography in Light Mode */
+body.theme-light .text-white,
+body.theme-light h1,
+body.theme-light h2,
+body.theme-light h3,
+body.theme-light h4,
+body.theme-light h5 {
+  color: #0F172A !important;
+}
+
+body.theme-light .text-slate-100,
+body.theme-light .text-slate-200,
+body.theme-light .text-slate-300 {
+  color: #1E293B !important;
+}
+
+body.theme-light .text-slate-400,
+body.theme-light .text-slate-500 {
+  color: #475569 !important;
+}
+
+body.theme-light .text-amber-400,
+body.theme-light .text-amber-300 {
+  color: #D97706 !important;
+}
+
+body.theme-light .text-emerald-400,
+body.theme-light .text-emerald-300 {
+  color: #059669 !important;
+}
+
+body.theme-light .text-rose-400,
+body.theme-light .text-rose-300 {
+  color: #E11D48 !important;
+}
+
+body.theme-light .text-sky-400,
+body.theme-light .text-blue-400 {
+  color: #0284C7 !important;
+}
+
+body.theme-light .text-purple-400 {
+  color: #7C3AED !important;
+}
+
+/* Buttons & Badges in Light Mode */
+body.theme-light .preset-btn {
+  background-color: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+  color: #1E293B !important;
+}
+
+body.theme-light .preset-btn:hover {
+  background-color: #FEF3C7 !important;
+  color: #92400E !important;
+  border-color: #FCD34D !important;
+}
+
+body.theme-light #openSearchBtn,
+body.theme-light #themeToggleBtn {
+  background-color: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+  color: #1E293B !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+}
+
+body.theme-light #themeIcon {
+  color: #475569 !important;
+}
+
+body.theme-light .nav-tab {
+  color: #64748B !important;
+}
+
+body.theme-light .nav-tab-active {
+  background: linear-gradient(180deg, rgba(255, 196, 0, 0.22) 0%, rgba(255, 196, 0, 0.04) 100%) !important;
+  color: #B45309 !important;
+  border-color: #D97706 !important;
+}
+
+/* Modals & Tables in Light Mode */
+body.theme-light .modal-content {
+  background: #FFFFFF !important;
+  border-color: #E2E8F0 !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.18) !important;
+}
+
+body.theme-light #modalFormulaBox {
+  background: #F1F5F9 !important;
+  border-color: #E2E8F0 !important;
+  color: #047857 !important;
+}
+
+body.theme-light table thead {
+  background: #F1F5F9 !important;
+  color: #334155 !important;
+}
+
+body.theme-light table tbody {
+  background: #FFFFFF !important;
+  color: #1E293B !important;
+}
+
+body.theme-light table tbody tr {
+  border-color: #F1F5F9 !important;
+}
+
+body.theme-light footer {
+  background-color: #FFFFFF !important;
+  border-color: #E2E8F0 !important;
+  color: #64748B !important;
+}
+
+/* Chat & Inputs in Light Mode */
+body.theme-light #chatMessages {
+  background-color: #F8FAFC !important;
+  border-color: #E2E8F0 !important;
+}
+
+body.theme-light #chatInput,
+body.theme-light #searchInput {
+  background-color: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+body.theme-light input[type=range] {
+  background-color: #E2E8F0 !important;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 9999px;
+}
+body.theme-light ::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+}
+
+/* Glass Card Default */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 25px -4px rgba(0, 0, 0, 0.45);
+}
+
+.glass-card-hover {
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-card-hover:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-highlight);
+  box-shadow: 0 16px 35px -6px rgba(0, 0, 0, 0.5), 0 0 20px var(--primary-gold-glow);
+}
+
+.gold-glow {
+  box-shadow: 0 0 25px rgba(255, 196, 0, 0.35);
+}
+
+/* Tab Navigation */
+.nav-tab {
+  transition: all 0.2s ease-in-out;
+}
+.nav-tab-active {
+  background: linear-gradient(180deg, rgba(255, 196, 0, 0.18) 0%, rgba(255, 196, 0, 0.04) 100%) !important;
+  color: #FFC400 !important;
+  border-color: #FFC400 !important;
+  font-weight: 800;
+  box-shadow: 0 0 15px rgba(255, 196, 0, 0.2) !important;
+}
+
+body.theme-light .nav-tab-active {
+  background: #FFFFFF !important;
+  color: #B45309 !important;
+  border-color: #D97706 !important;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15) !important;
+}
+
+/* Modal Animations */
+.modal-overlay {
+  transition: opacity 0.2s ease;
+}
+.modal-content {
+  animation: modalSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalSlideUp {
+  0% { opacity: 0; transform: scale(0.96) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Range Sliders */
+input[type=range] {
+  height: 6px;
+  border-radius: 9999px;
+  background: #1E293B;
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #FFC400;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 196, 0, 0.6);
+  border: 2px solid #0B132B;
+  transition: transform 0.12s ease;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}

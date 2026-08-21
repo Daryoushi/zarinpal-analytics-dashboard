@@ -1,0 +1,52 @@
+[
+  {
+    "category_id": 59770001,
+    "category_title": "فروشگاه لوازم آرایشی و بهداشتی",
+    "merchants": 38,
+    "sessions": 94914,
+    "paid_txs": 45390,
+    "cr_pct": 47.82,
+    "volume_tomans": 2246644453030.0,
+    "avg_ticket_toman": 49496463.0
+  },
+  {
+    "category_id": 56610001,
+    "category_title": "کیف و کفش فروشی",
+    "merchants": 69,
+    "sessions": 280751,
+    "paid_txs": 169721,
+    "cr_pct": 60.45,
+    "volume_tomans": 1704350241596.0,
+    "avg_ticket_toman": 10042070.0
+  },
+  {
+    "category_id": 48160000,
+    "category_title": "خدمات شبکه‌های کامپیوتری و اینترنت",
+    "merchants": 53,
+    "sessions": 1285002,
+    "paid_txs": 705812,
+    "cr_pct": 54.93,
+    "volume_tomans": 892849861366.0,
+    "avg_ticket_toman": 1264997.0
+  },
+  {
+    "category_id": 48160002,
+    "category_title": "ارائه دهنده خدمات اینترنت",
+    "merchants": 25,
+    "sessions": 55606,
+    "paid_txs": 37317,
+    "cr_pct": 67.11,
+    "volume_tomans": 247085694061.0,
+    "avg_ticket_toman": 6621264.0
+  },
+  {
+    "category_id": 82410000,
+    "category_title": "مراکز آموزشی مجازی",
+    "merchants": 158,
+    "sessions": 346566,
+    "paid_txs": 76120,
+    "cr_pct": 21.96,
+    "volume_tomans": 191084899424.0,
+    "avg_ticket_toman": 2510311.0
+  }
+]

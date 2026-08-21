@@ -1,0 +1,8 @@
+{
+  "port": 8000,
+  "platform": "python",
+  "python": {
+    "version": "3.12"
+  },
+  "app": "zarinpal-analytics"
+}

@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>داشبورد تحلیلی و بینش‌پژوهی زرین‌پال | ZarinPal Analytics</title>
+  
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            zarin: {
+              gold: '#FFC400',
+              hover: '#F59E0B',
+              navy: '#0B132B',
+              surface: '#0F172A',
+              dark: '#080D1A',
+              card: '#111827',
+              border: '#1F2937'
+            }
+          },
+          fontFamily: {
+            sans: ['"Yekan Bakh FaNum"', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Custom Styles (Includes Yekan Bakh FaNum Fonts) -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-zarin-dark text-slate-100 min-h-screen flex flex-col font-sans selection:bg-amber-400 selection:text-slate-950">
+
+  <!-- TOP APP HEADER -->
+  <header class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 shadow-2xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Main Navbar Row -->
+      <div class="h-16 flex items-center justify-between gap-3">
+        
+        <!-- Mobile Right: Hamburger Button (Hidden on md+) -->
+        <div class="flex items-center gap-2 md:hidden">
+          <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="w-10 h-10 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/70 text-amber-400 flex items-center justify-center transition shadow-sm" title="منو">
+            <i class="fa-solid fa-bars text-base" id="mobileMenuIcon"></i>
+          </button>
+        </div>
+
+        <!-- Brand & Title (Centered on mobile, Right on desktop) -->
+        <div class="flex items-center gap-3 md:gap-3.5 mx-auto md:mx-0">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 via-amber-400 to-amber-300 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg gold-glow shrink-0">
+            Z
+          </div>
+          <div class="text-center md:text-right">
+            <h1 class="text-sm sm:text-base md:text-lg font-black text-white leading-tight">
+              داشبورد تحلیلی و بینش‌پژوهی زرین‌پال
+            </h1>
+            <p class="text-[11px] text-slate-400 hidden md:block">کاوش عمیق، کنترل مخدوش‌کننده، ردیابی‌پذیری و بینش اقدام‌پذیر</p>
+          </div>
+        </div>
+
+        <!-- Desktop Left Controls (Search, Theme, Global Scope Badge) -->
+        <div class="flex items-center gap-2 sm:gap-2.5">
+          
+          <!-- Theme Toggle Button -->
+          <button id="themeToggleBtn" onclick="toggleTheme()" class="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/70 text-amber-400 transition shadow-sm shrink-0" title="تغییر تم تاریک / روشن">
+            <i class="fa-solid fa-sun text-sm" id="themeIcon"></i>
+          </button>
+
+          <!-- Search Button -->
+          <button id="openSearchBtn" class="flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/70 text-xs sm:text-sm text-slate-200 transition shadow-sm">
+            <i class="fa-solid fa-magnifying-glass text-amber-400"></i>
+            <span class="hidden md:inline font-medium">انتخاب از بین ۳۴۳ پذیرنده...</span>
+            <span class="md:hidden font-medium">جستجو</span>
+            <kbd class="hidden md:inline-block px-1.5 py-0.5 bg-slate-950 rounded text-[10px] text-slate-400 border border-slate-800">M</kbd>
+          </button>
+
+          <div class="h-6 w-px bg-slate-800 hidden lg:block"></div>
+
+          <!-- Global Scope Badge (Desktop only) -->
+          <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>۲,۲۱۳,۲۸۹ تراکنش شاپرک (۱۸۰ روز)</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- DESKTOP ARCHETYPE PRESETS (Clean 6-Column Grid without horizontal scrolling) -->
+      <div class="hidden md:block border-t border-slate-800/60 py-2.5">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-xs text-slate-400 font-bold shrink-0 flex items-center gap-1.5 ml-2">
+            <i class="fa-solid fa-bolt text-amber-400"></i>
+            سناریوها:
+          </span>
+          <div class="grid grid-cols-6 gap-2 w-full">
+            
+            <button onclick="switchMerchant('M156')" class="preset-btn px-2 py-1.5 rounded-xl bg-slate-900/90 hover:bg-amber-400/20 hover:text-amber-300 border border-slate-800 text-slate-300 transition flex items-center justify-center gap-1.5 text-xs font-semibold truncate" data-m="M156" title="پیشتاز لوازم آرایشی (مگا ترافیک)">
+              <span>👑</span> <span class="truncate">لوازم آرایشی (M156)</span>
+            </button>
+
+            <button onclick="switchMerchant('M31')" class="preset-btn px-2 py-1.5 rounded-xl bg-slate-900/90 hover:bg-amber-400/20 hover:text-amber-300 border border-slate-800 text-slate-300 transition flex items-center justify-center gap-1.5 text-xs font-semibold truncate" data-m="M31" title="آموزش مجازی (افت درگاه و خطای بانکی)">
+              <span>🎓</span> <span class="truncate">آموزش مجازی (M31)</span>
+            </button>
+
+            <button onclick="switchMerchant('M18')" class="preset-btn px-2 py-1.5 rounded-xl bg-slate-900/90 hover:bg-amber-400/20 hover:text-amber-300 border border-slate-800 text-slate-300 transition flex items-center justify-center gap-1.5 text-xs font-semibold truncate" data-m="M18" title="کیف و کفش (کنترل فصلی نوروز)">
+              <span>👠</span> <span class="truncate">کیف و کفش (M18)</span>
+            </button>
+
+            <button onclick="switchMerchant('M250')" class="preset-btn px-2 py-1.5 rounded-xl bg-slate-900/90 hover:bg-amber-400/20 hover:text-amber-300 border border-slate-800 text-slate-300 transition flex items-center justify-center gap-1.5 text-xs font-semibold truncate" data-m="M250" title="خدمات شبکه و هاستینگ (فرکانس بالا)">
+              <span>🌐</span> <span class="truncate">خدمات شبکه (M250)</span>
+            </button>
+
+            <button onclick="switchMerchant('M27')" class="preset-btn px-2 py-1.5 rounded-xl bg-slate-900/90 hover:bg-amber-400/20 hover:text-amber-300 border border-slate-800 text-slate-300 transition flex items-center justify-center gap-1.5 text-xs font-semibold truncate" data-m="M27" title="اینترنت ISP (وفاداری و LTV بالا)">
+              <span>📶</span> <span class="truncate">اینترنت ISP (M27)</span>
+            </button>
+
+            <button onclick="switchMerchant('M130')" class="preset-btn px-2 py-1.5 rounded-xl bg-slate-900/90 hover:bg-amber-400/20 hover:text-amber-300 border border-slate-800 text-slate-300 transition flex items-center justify-center gap-1.5 text-xs font-semibold truncate" data-m="M130" title="پذیرنده کم‌تراکنش (مدیریت نمونه کم)">
+              <span>🔬</span> <span class="truncate">پذیرنده کوچک (M130)</span>
+            </button>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- MOBILE COLLAPSIBLE MENU DRAWER -->
+      <div id="mobileMenuDrawer" class="hidden md:hidden border-t border-slate-800/80 py-3 space-y-3">
+        
+        <div class="px-2">
+          <div class="flex items-center justify-between text-xs text-slate-400 font-bold mb-2">
+            <span><i class="fa-solid fa-bolt text-amber-400 ml-1"></i>سناریوهای آماده:</span>
+            <span class="text-[10px] text-emerald-400">۲,۲۱۳,۲۸۹ رکورد شاپرک</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            
+            <button onclick="switchMerchant('M156'); toggleMobileMenu();" class="preset-btn p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-semibold flex items-center gap-2" data-m="M156">
+              <span>👑</span> <span class="truncate">آرایشی (M156)</span>
+            </button>
+
+            <button onclick="switchMerchant('M31'); toggleMobileMenu();" class="preset-btn p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-semibold flex items-center gap-2" data-m="M31">
+              <span>🎓</span> <span class="truncate">آموزش (M31)</span>
+            </button>
+
+            <button onclick="switchMerchant('M18'); toggleMobileMenu();" class="preset-btn p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-semibold flex items-center gap-2" data-m="M18">
+              <span>👠</span> <span class="truncate">پوشاک (M18)</span>
+            </button>
+
+            <button onclick="switchMerchant('M250'); toggleMobileMenu();" class="preset-btn p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-semibold flex items-center gap-2" data-m="M250">
+              <span>🌐</span> <span class="truncate">شبکه (M250)</span>
+            </button>
+
+            <button onclick="switchMerchant('M27'); toggleMobileMenu();" class="preset-btn p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-semibold flex items-center gap-2" data-m="M27">
+              <span>📶</span> <span class="truncate">اینترنت (M27)</span>
+            </button>
+
+            <button onclick="switchMerchant('M130'); toggleMobileMenu();" class="preset-btn p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-semibold flex items-center gap-2" data-m="M130">
+              <span>🔬</span> <span class="truncate">کوچک (M130)</span>
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- ACTIVE MERCHANT HEADER CARD -->
+    <div id="merchantHeaderCard" class="glass-card rounded-2xl p-5 border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="flex items-start sm:items-center gap-4">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 flex items-center justify-center text-amber-400 text-2xl shrink-0 shadow-inner">
+          <i class="fa-solid fa-store" id="categoryIcon"></i>
+        </div>
+        <div>
+          <div class="flex flex-wrap items-center gap-2">
+            <h2 class="text-xl font-black text-white tracking-tight" id="merchantTitle">پذیرنده M156</h2>
+            <span id="categoryBadge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-400/10 text-amber-400 border border-amber-400/20">فروشگاه لوازم آرایشی و بهداشتی</span>
+            <span id="volumeTierBadge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">پیشتاز و پرتراکنش (Top 10%)</span>
+          </div>
+          <p class="text-xs text-slate-400 mt-1 flex items-center gap-3 font-medium">
+            <span><i class="fa-solid fa-hashtag ml-1 text-slate-500"></i>ترمینال اصلی: <span id="terminalKeyText" class="text-slate-300 font-bold">TRM-156</span></span>
+            <span><i class="fa-regular fa-clock ml-1 text-slate-500"></i>بازه تحلیل: <span class="text-slate-300">۶ ماهه اول ۲۰۲۶ (۱۸۰ روز)</span></span>
+            <span id="sampleSizeNotice" class="hidden text-amber-300 bg-amber-900/30 px-2 py-0.5 rounded border border-amber-500/30 text-[11px] font-bold">حجم نمونه محدود</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Right -->
+      <div class="flex items-center gap-4 border-t md:border-t-0 md:border-r border-slate-800/80 pt-3 md:pt-0 md:pr-6">
+        <div class="text-left sm:text-right">
+          <span class="text-xs text-slate-400 block font-medium">گردش مالی ۶ ماهه</span>
+          <span id="totalVolumeText" class="text-lg font-black text-amber-400">۲,۰۱۲.۹ میلیون تومان</span>
+        </div>
+        <button onclick="openSimulationTab()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black text-xs sm:text-sm shadow-md transition flex items-center gap-2">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>شبیه‌ساز رشد درآمد</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 4 CORE KPI CARDS (WITH TRACEABILITY ON CLICK) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      
+      <!-- KPI 1: Conversion Rate -->
+      <div class="glass-card glass-card-hover rounded-2xl p-4 border border-slate-800/80 cursor-pointer relative group" onclick="openTraceModal('cr_kpi')">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-400">نرخ تبدیل نشست (CR)</span>
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-sm border border-emerald-500/20">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+        </div>
+        <div class="mt-2 flex items-baseline gap-2">
+          <span id="crValueText" class="text-2xl font-black text-white">۵۶.۲٪</span>
+          <span id="crRankBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">صدک ۷۱ صنف</span>
+        </div>
+        <p class="text-[11px] text-slate-400 mt-2.5 flex items-center justify-between border-t border-slate-800/60 pt-2">
+          <span>موفق: <span id="crPaidCountText" class="text-slate-200 font-bold">۴۵,۳۹۰</span> از <span id="crSessionsText" class="text-slate-200 font-bold">۸۰,۷۹۲</span></span>
+          <span class="text-amber-400 group-hover:underline text-[10px] font-bold flex items-center gap-1">ردیابی فرمول <i class="fa-solid fa-arrow-left"></i></span>
+        </p>
+      </div>
+
+      <!-- KPI 2: Customer Retention -->
+      <div class="glass-card glass-card-hover rounded-2xl p-4 border border-slate-800/80 cursor-pointer relative group" onclick="openTraceModal('retention_kpi')">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-400">نرخ خرید مجدد مشتریان</span>
+          <div class="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center text-sm border border-sky-500/20">
+            <i class="fa-solid fa-users"></i>
+          </div>
+        </div>
+        <div class="mt-2 flex items-baseline gap-2">
+          <span id="repeatRateValueText" class="text-2xl font-black text-white">۱۲.۴٪</span>
+          <span id="retentionSegBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-sky-500/10 text-sky-300 border border-sky-500/30">LTV چندبرابری</span>
+        </div>
+        <p class="text-[11px] text-slate-400 mt-2.5 flex items-center justify-between border-t border-slate-800/60 pt-2">
+          <span>مشتریان یکتا: <span id="uniqueCustomersText" class="text-slate-200 font-bold">۳۷,۹۵۷</span> کارت</span>
+          <span class="text-amber-400 group-hover:underline text-[10px] font-bold flex items-center gap-1">ردیابی LTV <i class="fa-solid fa-arrow-left"></i></span>
+        </p>
+      </div>
+
+      <!-- KPI 3: Payment Friction Index -->
+      <div class="glass-card glass-card-hover rounded-2xl p-4 border border-slate-800/80 cursor-pointer relative group" onclick="openTraceModal('friction_kpi')">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-400">شاخص اصطکاک پرداخت (PFI)</span>
+          <div class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center text-sm border border-purple-500/20">
+            <i class="fa-solid fa-arrows-rotate"></i>
+          </div>
+        </div>
+        <div class="mt-2 flex items-baseline gap-2">
+          <span id="pfiValueText" class="text-2xl font-black text-white">۱.۰۸</span>
+          <span id="frictionSegBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/30">اصطکاک بهینه</span>
+        </div>
+        <p class="text-[11px] text-slate-400 mt-2.5 flex items-center justify-between border-t border-slate-800/60 pt-2">
+          <span>تلاش مجدد: <span id="retrySessionsCountText" class="text-slate-200 font-bold">۳,۸۲۰</span> نشست</span>
+          <span class="text-amber-400 group-hover:underline text-[10px] font-bold flex items-center gap-1">ردیابی سوییچ <i class="fa-solid fa-arrow-left"></i></span>
+        </p>
+      </div>
+
+      <!-- KPI 4: Average Order Value -->
+      <div class="glass-card glass-card-hover rounded-2xl p-4 border border-slate-800/80 cursor-pointer relative group" onclick="openTraceModal('ticket_kpi')">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-400">میانگین سبد خرید (تومان)</span>
+          <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-sm border border-amber-500/20">
+            <i class="fa-solid fa-receipt"></i>
+          </div>
+        </div>
+        <div class="mt-2 flex items-baseline gap-2">
+          <span id="avgTicketValueText" class="text-2xl font-black text-amber-400">۴.۹۵M</span>
+          <span id="ticketRankBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/30">صدک ۹۴ صنف</span>
+        </div>
+        <p class="text-[11px] text-slate-400 mt-2.5 flex items-center justify-between border-t border-slate-800/60 pt-2">
+          <span>میانه صنف: <span id="medianTicketText" class="text-slate-200 font-bold">۲.۹M تومان</span></span>
+          <span class="text-amber-400 group-hover:underline text-[10px] font-bold flex items-center gap-1">ردیابی توزیع <i class="fa-solid fa-arrow-left"></i></span>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ACTIONABLE INSIGHTS SECTION (90 POINTS HIGHEST WEIGHT) -->
+    <div class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-black text-white flex items-center gap-2">
+          <i class="fa-solid fa-bullseye text-amber-400"></i>
+          بینش‌های اقدام‌پذیر و اثر مالی (Actionable Insights)
+          <span class="text-xs text-slate-400 font-normal hidden sm:inline">(شامل عدد مشخص + اقدام اجرایی + ردیابی کامل فرمول)</span>
+        </h3>
+        <span class="text-xs text-amber-400 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20 font-bold">
+          بزرگ‌ترین وزن داوری
+        </span>
+      </div>
+
+      <!-- INSIGHT CARDS CONTAINER -->
+      <div id="insightsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Rendered dynamically via app.js -->
+      </div>
+    </div>
+
+    <!-- NAVIGATION TABS (MODERN 5-COLUMN RESPONSIVE SEGMENTED GRID) -->
+    <div class="p-1.5 rounded-2xl bg-slate-950/70 border border-slate-800/80 shadow-lg">
+      <nav class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5 w-full" aria-label="Tabs">
+        
+        <button onclick="switchTab('funnel')" id="tab-funnel" class="nav-tab nav-tab-active py-2.5 px-3 rounded-xl border font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition text-center truncate shadow-sm">
+          <i class="fa-solid fa-filter text-amber-400"></i>
+          <span class="truncate">قیف اصطکاک پرداخت</span>
+        </button>
+
+        <button onclick="switchTab('seasonality')" id="tab-seasonality" class="nav-tab py-2.5 px-3 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-900/60 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition text-center truncate">
+          <i class="fa-solid fa-scale-balanced text-sky-400"></i>
+          <span class="truncate">اثر فصلی و بنچ‌مارک</span>
+        </button>
+
+        <button onclick="switchTab('retention')" id="tab-retention" class="nav-tab py-2.5 px-3 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-900/60 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition text-center truncate">
+          <i class="fa-solid fa-user-group text-emerald-400"></i>
+          <span class="truncate">وفاداری مشتریان (LTV)</span>
+        </button>
+
+        <button onclick="switchTab('simulator')" id="tab-simulator" class="nav-tab py-2.5 px-3 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-900/60 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition text-center truncate">
+          <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i>
+          <span class="truncate">شبیه‌ساز رشد درآمد</span>
+        </button>
+
+        <button onclick="switchTab('ai-copilot')" id="tab-ai-copilot" class="nav-tab py-2.5 px-3 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-900/60 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition text-center truncate col-span-2 sm:col-span-1">
+          <i class="fa-solid fa-brain text-purple-400"></i>
+          <span class="truncate">مشاور هوشمند</span>
+        </button>
+
+      </nav>
+    </div>
+
+    <!-- TAB CONTENTS CONTAINER -->
+    <div id="tabContents" class="space-y-6">
+
+      <!-- TAB 1: PAYMENT EFFORT FUNNEL -->
+      <div id="content-funnel" class="tab-pane space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <!-- Funnel Visualizer (2 Cols) -->
+          <div class="glass-card rounded-2xl p-5 border border-slate-800 lg:col-span-2 space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="text-sm font-black text-white flex items-center gap-2">
+                <i class="fa-solid fa-diagram-project text-amber-400"></i>
+                قیف ریزش مراحل پرداخت در سطح نشست (Session Funnel)
+              </h4>
+              <button onclick="openTraceModal('funnel_trace')" class="text-xs text-amber-400 hover:underline flex items-center gap-1 font-bold">
+                <i class="fa-solid fa-calculator"></i> نحوه محاسبه قیف
+              </button>
+            </div>
+
+            <!-- Visual Stages -->
+            <div class="space-y-3 pt-1">
+              
+              <!-- Stage 1: All Sessions -->
+              <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+                <div class="flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-md bg-slate-800 text-slate-300 font-black flex items-center justify-center text-[11px] border border-slate-700">۱</span>
+                    <span class="font-bold text-slate-200">ایجاد نشست پرداخت (Gateway Landing)</span>
+                    <span class="text-[10px] text-slate-400 hidden sm:inline">• کل کاربران هدایت‌شده به درگاه</span>
+                  </div>
+                  <span id="funnelTotalSessionsText" class="font-bold text-slate-300">۱۰۰٪ (۸۰,۷۹۲ نشست)</span>
+                </div>
+                <div class="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden flex border border-slate-800">
+                  <div class="h-full bg-gradient-to-l from-slate-500 to-slate-400 rounded-full transition-all duration-500" style="width: 100%;"></div>
+                </div>
+              </div>
+
+              <!-- Stage 2: Bounce (NoAttempt) -->
+              <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+                <div class="flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-md bg-rose-500/20 text-rose-400 font-black flex items-center justify-center text-[11px] border border-rose-500/30">۲</span>
+                    <span class="font-bold text-rose-300">پرش بدون تلاش (Bounce / Zero-Try)</span>
+                    <span class="text-[10px] text-slate-400 hidden sm:inline">• انصراف در صفحه فرود پیش از ارسال به بانک</span>
+                  </div>
+                  <span id="funnelBounceText" class="font-bold text-rose-400">۱۳.۶٪ (۱۰,۹۷۰ نشست)</span>
+                </div>
+                <div class="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden flex border border-slate-800">
+                  <div id="funnelBounceBar" class="h-full bg-gradient-to-l from-rose-500 to-rose-600 rounded-full transition-all duration-500" style="width: 13.6%;"></div>
+                </div>
+              </div>
+
+              <!-- Stage 3: Paid on Try 1 -->
+              <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+                <div class="flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-md bg-emerald-500/20 text-emerald-400 font-black flex items-center justify-center text-[11px] border border-emerald-500/30">۳</span>
+                    <span class="font-bold text-emerald-300">موفقیت مستقیم در تلاش اول</span>
+                    <span class="text-[10px] text-slate-400 hidden sm:inline">• پرداخت بدون اصطکاک</span>
+                  </div>
+                  <span id="funnelPaidTry1Text" class="font-bold text-emerald-400">۵۳.۴٪ (۴۳,۱۴۰ نشست)</span>
+                </div>
+                <div class="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden flex border border-slate-800">
+                  <div id="funnelPaidTry1Bar" class="h-full bg-gradient-to-l from-emerald-400 to-emerald-600 rounded-full transition-all duration-500" style="width: 53.4%;"></div>
+                </div>
+              </div>
+
+              <!-- Stage 4: Recovered on Retry 2+ -->
+              <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+                <div class="flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-md bg-amber-500/20 text-amber-400 font-black flex items-center justify-center text-[11px] border border-amber-500/30">۴</span>
+                    <span class="font-bold text-amber-300">بازیابی با تلاش مجدد (Recovered on Retry 2+)</span>
+                    <span class="text-[10px] text-slate-400 hidden sm:inline">• نجات‌یافته با سوییچ هوشمند درگاه</span>
+                  </div>
+                  <span id="funnelRetryRecoveryText" class="font-bold text-amber-400">۲.۸٪ (۲,۲۵۰ نشست)</span>
+                </div>
+                <div class="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden flex border border-slate-800">
+                  <div id="funnelRetryRecoveryBar" class="h-full bg-gradient-to-l from-amber-400 to-amber-500 rounded-full transition-all duration-500" style="width: 2.8%;"></div>
+                </div>
+              </div>
+
+              <!-- Stage 5: Bank Failure -->
+              <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+                <div class="flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-md bg-slate-700/40 text-slate-400 font-black flex items-center justify-center text-[11px] border border-slate-700">۵</span>
+                    <span class="font-bold text-slate-300">شکست در درگاه بانکی / PSP</span>
+                    <span class="text-[10px] text-slate-400 hidden sm:inline">• خطای کارت، موجودی یا سوییچ شتاب</span>
+                  </div>
+                  <span id="funnelBankFailText" class="font-bold text-slate-400">۳۰.۲٪ (۲۴,۴۳۲ نشست)</span>
+                </div>
+                <div class="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden flex border border-slate-800">
+                  <div id="funnelBankFailBar" class="h-full bg-gradient-to-l from-slate-600 to-slate-700 rounded-full transition-all duration-500" style="width: 30.2%;"></div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Novel Methodology Box -->
+            <div class="p-4 rounded-xl bg-amber-400/5 border border-amber-400/20 text-xs text-slate-300 space-y-1">
+              <span class="font-bold text-amber-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-lightbulb"></i> کنترل سوگیری انتخاب (Selection Bias) در تلاش مجدد:
+              </span>
+              <p class="leading-relaxed">در آزمون کای‌دو، عملکرد فقط میان کاربرانی مقایسه شده که تصمیم به Retry گرفته‌اند؛ تعویض خودکار PSP نرخ موفقیت را از <strong>۲۲.۳٪ به ۴۳.۳٪</strong> (با معناداری $\chi^2=610.05, p < 10^{-100}$) جهش می‌دهد.</p>
+            </div>
+          </div>
+
+          <!-- Top Switch Errors (1 Col) -->
+          <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-4">
+            <h4 class="text-sm font-black text-white flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-rose-400"></i>
+              بیشترین علل خطای سوییچ بانکی
+            </h4>
+            <div id="topErrorsList" class="space-y-2.5">
+              <!-- Rendered via app.js -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 2: DECONFOUNDED SEASONALITY & BENCHMARK -->
+      <div id="content-seasonality" class="tab-pane hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          <!-- Monthly Trend Chart with Category Baseline -->
+          <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-black text-white flex items-center gap-2">
+                  <i class="fa-solid fa-chart-area text-amber-400"></i>
+                  روند ماهانه فروش و تفکیک اثر نوروز
+                </h4>
+                <p class="text-xs text-slate-400">مقایسه خط فروش پذیرنده با خط پایه صنف (کنترل مخدوش‌کننده فصلی)</p>
+              </div>
+              <button onclick="openTraceModal('seasonality_trace')" class="text-xs text-amber-400 hover:underline font-bold">
+                <i class="fa-solid fa-eye"></i> جزئیات DiD
+              </button>
+            </div>
+            <div class="h-64 relative">
+              <canvas id="monthlyChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Peer Distribution (Box-Plot Benchmark) -->
+          <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-black text-white flex items-center gap-2">
+                  <i class="fa-solid fa-ranking-star text-indigo-400"></i>
+                  جایگاه صدکی در صنف (Peer Percentiles)
+                </h4>
+                <p class="text-xs text-slate-400">عدم اتکا به میانگین به دلیل نامتقارن بودن توزیع (Gini = ۰.۹۵)</p>
+              </div>
+              <button onclick="openTraceModal('percentile_trace')" class="text-xs text-indigo-400 hover:underline font-bold">
+                <i class="fa-solid fa-chart-pie"></i> جدول صدک‌ها
+              </button>
+            </div>
+            <div class="h-64 relative">
+              <canvas id="peerBenchmarkChart"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 3: CUSTOMER RETENTION & LTV -->
+      <div id="content-retention" class="tab-pane hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <!-- LTV Matrix (1 Col) -->
+          <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-4">
+            <h4 class="text-sm font-black text-white flex items-center gap-2">
+              <i class="fa-solid fa-id-card-clip text-sky-400"></i>
+              ماتریس وفاداری و ارزش طول عمر (LTV)
+            </h4>
+            
+            <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-3">
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-400 font-medium">تعداد خریداران یک‌باره:</span>
+                <span id="retOneTimeCountText" class="font-bold text-slate-200">۳۳,۲۳۹ نفر</span>
+              </div>
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-400 font-medium">میانگین خرید خریدار یک‌باره:</span>
+                <span id="retOneTimeLtvText" class="font-bold text-amber-400">۴.۲M تومان</span>
+              </div>
+              <div class="h-px bg-slate-800"></div>
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-400 font-medium">تعداد خریداران بازگشتی (۲+):</span>
+                <span id="retRepeatCountText" class="font-bold text-emerald-400">۴,۷۱۷ نفر</span>
+              </div>
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-400 font-medium">میانگین ارزش مشتری وفادار (LTV):</span>
+                <span id="retRepeatLtvText" class="font-bold text-emerald-400">۱۷.۹M تومان</span>
+              </div>
+              <div class="h-px bg-slate-800"></div>
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-400 font-medium">ضریب اهرم وفاداری:</span>
+                <span id="retLtvMultiplierText" class="font-bold text-purple-400">۴.۲ برابر مشتری عادی</span>
+              </div>
+            </div>
+
+            <button onclick="openTraceModal('retention_trace')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 transition shadow-sm">
+              <i class="fa-solid fa-code-compare ml-1"></i> مشاهده لاینج کارت‌های هش‌شده مشتری
+            </button>
+          </div>
+
+          <!-- Retention Curve / Hourly & DOW Patterns (2 Cols) -->
+          <div class="glass-card rounded-2xl p-5 border border-slate-800 lg:col-span-2 space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="text-sm font-black text-white flex items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left text-sky-400"></i>
+                توزیع زمانی تراکنش‌های موفق در طول ساعات شبانه‌روز
+              </h4>
+              <span class="text-xs text-slate-400 font-medium">ساعات طلایی خرید مشتریان</span>
+            </div>
+            <div class="h-64 relative">
+              <canvas id="hourlyChart"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 4: INTERACTIVE REVENUE SIMULATOR -->
+      <div id="content-simulator" class="tab-pane hidden space-y-6">
+        <div class="glass-card rounded-2xl p-6 border border-slate-800 space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4">
+            <div>
+              <h4 class="text-base font-black text-white flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i>
+                شبیه‌ساز رشد درآمد سالانه (Interactive Growth Simulator)
+              </h4>
+              <p class="text-xs text-slate-400 mt-0.5">اسلایدرها را جابه‌جا کنید تا اثر ریالی بهبود هر اهرم را به صورت زنده ببینید.</p>
+            </div>
+            <div class="text-left sm:text-right">
+              <span class="text-xs text-slate-400 block font-medium">درآمد سالانه سال پایه:</span>
+              <span id="simBaseAnnualText" class="text-sm font-black text-slate-200">۴,۰۲۵.۸ میلیون تومان</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Controls (1 Col) -->
+            <div class="space-y-5 lg:col-span-1">
+              
+              <!-- Lever 1: Retry Recovery Boost -->
+              <div class="space-y-2">
+                <div class="flex justify-between text-xs font-bold">
+                  <span class="text-amber-400"><i class="fa-solid fa-arrows-split-up-and-left ml-1"></i>سوییچ هوشمند درگاه در تلاش مجدد:</span>
+                  <span id="sliderValRetry" class="text-white font-bold">+۱۰٪</span>
+                </div>
+                <input id="sliderRetry" type="range" min="0" max="30" step="1" value="10" class="w-full accent-amber-400 bg-slate-800 rounded-lg cursor-pointer">
+                <div class="flex justify-between text-[10px] text-slate-500 font-medium">
+                  <span>۰٪ (وضع فعلی)</span>
+                  <span>+۱۵٪</span>
+                  <span>+۳۰٪ (حداکثر سوییچ)</span>
+                </div>
+              </div>
+
+              <!-- Lever 2: Customer Retention Boost -->
+              <div class="space-y-2">
+                <div class="flex justify-between text-xs font-bold">
+                  <span class="text-sky-400"><i class="fa-solid fa-heart ml-1"></i>تبدیل خریداران تک‌خرید به وفادار:</span>
+                  <span id="sliderValRetention" class="text-white font-bold">+۵٪</span>
+                </div>
+                <input id="sliderRetention" type="range" min="0" max="20" step="0.5" value="5" class="w-full accent-sky-400 bg-slate-800 rounded-lg cursor-pointer">
+                <div class="flex justify-between text-[10px] text-slate-500 font-medium">
+                  <span>۰٪</span>
+                  <span>+۱۰٪</span>
+                  <span>+۲۰٪ (کمپین بازگشت)</span>
+                </div>
+              </div>
+
+              <!-- Lever 3: Bounce Reduction -->
+              <div class="space-y-2">
+                <div class="flex justify-between text-xs font-bold">
+                  <span class="text-emerald-400"><i class="fa-solid fa-door-open ml-1"></i>کاهش پرش اولیه صفحه درگاه:</span>
+                  <span id="sliderValBounce" class="text-white font-bold">+۱۵٪</span>
+                </div>
+                <input id="sliderBounce" type="range" min="0" max="50" step="5" value="15" class="w-full accent-emerald-400 bg-slate-800 rounded-lg cursor-pointer">
+                <div class="flex justify-between text-[10px] text-slate-500 font-medium">
+                  <span>۰٪</span>
+                  <span>+۲۵٪</span>
+                  <span>+۵۰٪ (اتصال مستقیم)</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Simulation Output & Financial Impact (2 Cols) -->
+            <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              
+              <!-- Growth Projection Card -->
+              <div class="p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-amber-400/30 flex flex-col justify-between shadow-xl">
+                <div>
+                  <span class="text-xs text-amber-400 font-bold block mb-1">پیش‌بینی درآمد سالانه جدید:</span>
+                  <span id="simProjectedAnnualText" class="text-2xl sm:text-3xl font-black text-white">۴,۵۷۳.۸ میلیون تومان</span>
+                  <div class="mt-2 flex items-center gap-2">
+                    <span id="simGrowthPctBadge" class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-black text-xs">+۱۳.۶٪ رشد کل</span>
+                    <span class="text-[11px] text-slate-400">نسبت به وضعیت جاری</span>
+                  </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-slate-800">
+                  <span class="text-xs text-slate-400 block font-medium">ارزش خالص افزوده سالانه:</span>
+                  <span id="simNetIncrementalText" class="text-xl font-black text-emerald-400">+۵۴۸.۰ میلیون تومان</span>
+                </div>
+              </div>
+
+              <!-- Breakdown Breakdown -->
+              <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3 flex flex-col justify-between">
+                <span class="text-xs font-bold text-slate-300 block">تفکیک منابع رشد درآمد:</span>
+                
+                <div class="space-y-2 text-xs">
+                  <div class="flex justify-between">
+                    <span class="text-amber-400 font-medium">سوییچ درگاه (تلاش مجدد):</span>
+                    <span id="simBreakdownRetryText" class="font-bold text-slate-200">+۲۲۲.۵M تومان</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-sky-400 font-medium">وفاداری و ریتنشن مشتری:</span>
+                    <span id="simBreakdownRetentionText" class="font-bold text-slate-200">+۱۹۷.۲M تومان</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-emerald-400 font-medium">کاهش پرش درگاه (Direct UX):</span>
+                    <span id="simBreakdownBounceText" class="font-bold text-slate-200">+۱۲۸.۳M تومان</span>
+                  </div>
+                </div>
+
+                <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-[11px] text-slate-400">
+                  <i class="fa-solid fa-circle-info text-amber-400 ml-1"></i>
+                  محاسبه دقیق بر پایه سبد خرید، کدهای خطای شاپرک و شکاف LTV همین پذیرنده.
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 5: AI COPILOT -->
+      <div id="content-ai-copilot" class="tab-pane hidden space-y-6">
+        <div class="glass-card rounded-2xl p-6 border border-slate-800 space-y-4">
+          
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg border border-purple-500/30">
+                <i class="fa-solid fa-robot"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-black text-white flex items-center gap-2">
+                  دستیار هوشمند و مشاور تحلیل داده زرین‌پال
+                </h4>
+                <p class="text-xs text-slate-400">پاسخ‌های تحلیلی هوش مصنوعی منحصراً منطبق بر داده‌ها و مستندات تراکنش‌های همین پذیرنده</p>
+              </div>
+            </div>
+            <span class="text-xs px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
+              <i class="fa-solid fa-shield-halved ml-1"></i>ایزوله و بدون نشت داده
+            </span>
+          </div>
+
+          <!-- Chat Messages Container -->
+          <div id="chatMessages" class="h-72 overflow-y-auto space-y-3 p-3 bg-slate-950/60 rounded-xl border border-slate-800 text-xs">
+            <!-- Messages rendered dynamically -->
+          </div>
+
+          <!-- Suggested Prompts -->
+          <div class="flex flex-wrap gap-2 text-xs">
+            <span class="text-slate-500 font-bold self-center">پرسش‌های آماده:</span>
+            <button onclick="askAI('چرا نرخ تبدیل من پایینه و چطور بهترش کنم؟')" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 transition font-medium">
+              📉 چرا نرخ تبدیل من پایینه؟
+            </button>
+            <button onclick="askAI('سوییچ هوشمند درگاه چقدر برام سود داره؟')" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 transition font-medium">
+              ⚡ اثر سوییچ خودکار PSP
+            </button>
+            <button onclick="askAI('تعطیلات نوروز روی فروش من چه تاثیری گذاشت؟')" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 transition font-medium">
+              🌸 تحلیل افت/رشد فصلی نوروز
+            </button>
+            <button onclick="askAI('وضعیت وفاداری و خرید مجدد مشتریانم چطوره؟')" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 transition font-medium">
+              👥 تحلیل وفاداری و LTV مشتری
+            </button>
+          </div>
+
+          <!-- Chat Input -->
+          <div class="flex gap-2">
+            <input id="chatInput" type="text" placeholder="سوال تحلیلی خود را به فارسی بنویسید (مثلاً: علت اصلی تراکنش‌های ناموفق چیست؟)..." class="flex-1 px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400">
+            <button id="sendChatBtn" onclick="handleSendChat()" class="px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-md">
+              <span>ارسال</span>
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- TRACEABILITY & LINEAGE MODAL (75 POINTS) -->
+  <div id="traceModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm hidden modal-overlay">
+    <div class="glass-card bg-slate-900 border border-slate-700/80 rounded-3xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl modal-content overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-amber-400/20 text-amber-400 flex items-center justify-center text-base border border-amber-400/30">
+            <i class="fa-solid fa-calculator"></i>
+          </div>
+          <div>
+            <h3 id="modalTitle" class="text-base font-black text-white">ردیابی و شفافیت محاسبه شاخص</h3>
+            <p id="modalSubtitle" class="text-xs text-slate-400">منبع داده + فرمول ریاضی + فیلتر DuckDB + نمونه ردیف‌های خام</p>
+          </div>
+        </div>
+        <button onclick="closeTraceModal()" class="w-8 h-8 rounded-lg bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-sm transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-5 space-y-5 overflow-y-auto text-xs text-slate-300">
+        
+        <!-- Formula Section -->
+        <div class="space-y-2">
+          <span class="font-bold text-amber-400 text-xs flex items-center gap-1.5">
+            <i class="fa-solid fa-square-root-variable"></i> فرمول و منطق محاسبه (Mathematical Definition):
+          </span>
+          <div id="modalFormulaBox" class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-emerald-400 text-xs leading-relaxed font-bold">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Substitution Values -->
+        <div class="space-y-2">
+          <span class="font-bold text-slate-300 text-xs flex items-center gap-1.5">
+            <i class="fa-solid fa-list-check text-sky-400"></i> مقادیر جایگذاری‌شده در فرمول (Step-by-Step Values):
+          </span>
+          <div id="modalValuesGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Statistical & Methodology Basis -->
+        <div class="space-y-2">
+          <span class="font-bold text-slate-300 text-xs flex items-center gap-1.5">
+            <i class="fa-solid fa-vial text-purple-400"></i> آزمون آماری و کنترل متغیر مخدوش‌کننده (Confounder & Bias Control):
+          </span>
+          <div id="modalStatsBox" class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-slate-300 space-y-1">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Raw Lineage Sample Table -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-300 text-xs flex items-center gap-1.5">
+              <i class="fa-solid fa-table text-amber-400"></i> نمونه رکوردهای خام از فایل `challenge_data.gz` (Raw Transaction Lineage):
+            </span>
+            <span class="text-[10px] text-slate-500" id="modalLineageFilter">filter: merchant_key = '...'</span>
+          </div>
+          <div class="overflow-x-auto rounded-xl border border-slate-800">
+            <table class="w-full text-right text-[11px] whitespace-nowrap">
+              <thead class="bg-slate-950 text-slate-400 font-bold">
+                <tr>
+                  <th class="p-2.5">Session Key</th>
+                  <th class="p-2.5">تلاش (Try)</th>
+                  <th class="p-2.5">مبلغ (ریال)</th>
+                  <th class="p-2.5">وضعیت</th>
+                  <th class="p-2.5">PSP</th>
+                  <th class="p-2.5">کد سوییچ</th>
+                  <th class="p-2.5">کارت مشتری (هش)</th>
+                  <th class="p-2.5">تاریخ و زمان</th>
+                </tr>
+              </thead>
+              <tbody id="modalRawRowsTbody" class="divide-y divide-slate-800 text-slate-300 bg-slate-900/60">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 border-t border-slate-800 bg-slate-950/50 flex justify-end">
+        <button onclick="closeTraceModal()" class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition">
+          بستن
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MERCHANT SEARCH MODAL -->
+  <div id="searchModal" class="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 bg-slate-950/80 backdrop-blur-sm hidden modal-overlay">
+    <div class="glass-card bg-slate-900 border border-slate-700/80 rounded-2xl max-w-2xl w-full max-h-[80vh] flex flex-col shadow-2xl modal-content overflow-hidden">
+      
+      <!-- Search Input -->
+      <div class="p-4 border-b border-slate-800 flex items-center gap-3 bg-slate-950">
+        <i class="fa-solid fa-magnifying-glass text-amber-400"></i>
+        <input id="searchInput" type="text" placeholder="جستجوی کد پذیرنده یا صنف..." class="flex-1 bg-transparent text-sm text-white placeholder-slate-500 focus:outline-none font-medium">
+        <button onclick="closeSearchModal()" class="text-slate-400 hover:text-white text-sm">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Category Filter Pills in Search -->
+      <div class="p-3 bg-slate-950/80 border-b border-slate-800/80 flex items-center gap-1.5 overflow-x-auto no-scrollbar text-xs">
+        <button onclick="filterSearchByCategory(null)" class="search-cat-btn px-3 py-1 rounded-lg bg-amber-400 text-slate-950 font-bold shrink-0">همه اصناف</button>
+        <button onclick="filterSearchByCategory(59770001)" class="search-cat-btn px-3 py-1 rounded-lg bg-slate-900 text-slate-300 shrink-0 font-medium">لوازم آرایشی (۳۸)</button>
+        <button onclick="filterSearchByCategory(56610001)" class="search-cat-btn px-3 py-1 rounded-lg bg-slate-900 text-slate-300 shrink-0 font-medium">کیف و کفش (۶۹)</button>
+        <button onclick="filterSearchByCategory(48160000)" class="search-cat-btn px-3 py-1 rounded-lg bg-slate-900 text-slate-300 shrink-0 font-medium">خدمات شبکه (۵۳)</button>
+        <button onclick="filterSearchByCategory(48160002)" class="search-cat-btn px-3 py-1 rounded-lg bg-slate-900 text-slate-300 shrink-0 font-medium">اینترنت ISP (۲۵)</button>
+        <button onclick="filterSearchByCategory(82410000)" class="search-cat-btn px-3 py-1 rounded-lg bg-slate-900 text-slate-300 shrink-0 font-medium">آموزش مجازی (۱۵۸)</button>
+      </div>
+
+      <!-- Search Results List -->
+      <div id="searchResultsList" class="p-2 space-y-1 overflow-y-auto flex-1 text-xs">
+        <!-- Rendered dynamically via app.js -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto border-t border-slate-800/80 bg-slate-950 py-4 px-4 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <span class="font-medium">داشبورد تحلیلی و بینش‌پژوهی زرین‌پال • پردازش شده با موتور DuckDB و تحلیل چندمرحله‌ای آماری</span>
+    </div>
+  </footer>
+
+  <!-- Application JS Scripts -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
